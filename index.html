@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Member Search</title>
+</head>
+<body>
+  <h1>Member Search</h1>
+  
+  <form id="searchForm">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName">
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName">
+    <button type="submit">Search</button>
+  </form>
+  
+  <div id="results"></div>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      var firstName = document.getElementById('firstName').value.trim();
+      var lastName = document.getElementById('lastName').value.trim();
+
+      fetch('https://script.google.com/macros/s/AKfycbx_lg9hc1r9FFqlGPaiPyF_32ihz5F9kLgJQmPmlPlwHFqgt1Os0674oerRI9cdwwjYLw/exec?firstName=' + encodeURIComponent(firstName) + '&lastName=' + encodeURIComponent(lastName))
+        .then(response => response.json())
+        .then(data => {
+          var resultsDiv = document.getElementById('results');
+          resultsDiv.innerHTML = '';
+
+          if (data.length === 0) {
+            resultsDiv.textContent = 'No members found.';
+          } else {
+            var table = '<table><tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Status</th></tr>';
+            data.forEach(member => {
+              table += '<tr>';
+              table += `<td>${member.firstname}</td>`;
+              table += `<td>${member.surname}</td>`;
+              table += `<td>${member.email}</td>`;
+              table += `<td>${member.status}</td>`;
+              table += '</tr>';
+            });
+            table += '</table>';
+            resultsDiv.innerHTML = table;
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    });
+  </script>
+</body>
+</html>
