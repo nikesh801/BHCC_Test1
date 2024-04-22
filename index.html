@@ -23,7 +23,7 @@
       var firstName = document.getElementById('firstName').value.trim();
       var lastName = document.getElementById('lastName').value.trim();
 
-      fetch('https://script.google.com/macros/s/AKfycbyxw-tcvXgRMclhiEoMLNUeUVweViqjvIdtPjiYKSGZUWRK8tX6kKmqt72RjAKwkkBFHg?firstName=' + encodeURIComponent(firstName) + '&lastName=' + encodeURIComponent(lastName))
+      fetch('https://script.google.com/macros/s/AKfycbyxw-tcvXgRMclhiEoMLNUeUVweViqjvIdtPjiYKSGZUWRK8tX6kKmqt72RjAKwkkBFHg/exec?firstName=' + encodeURIComponent(firstName) + '&lastName=' + encodeURIComponent(lastName))
         .then(response => response.json())
         .then(data => {
           var resultsDiv = document.getElementById('results');
